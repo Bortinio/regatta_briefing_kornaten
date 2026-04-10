@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seascape 18 — Regatta Speed Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0f1a;--surface:#111827;--surface2:#1a2332;--surface3:#243044;
+  --text:#e2e8f0;--text-dim:#94a3b8;--text-muted:#64748b;
+  --accent:#38bdf8;--accent2:#818cf8;--warn:#f59e0b;--danger:#ef4444;--green:#22c55e;
+  --border:#1e293b;
+  --font:'DM Sans',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{font-size:15px}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px}
+
+/* Header */
+.hero{position:relative;padding:48px 0 36px;border-bottom:1px solid var(--border);margin-bottom:40px}
+.hero h1{font-size:2.4rem;font-weight:700;letter-spacing:-1.5px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{font-size:1rem;color:var(--text-dim);margin-top:6px}
+.hero .tag{display:inline-block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;padding:4px 10px;border-radius:4px;background:var(--surface2);color:var(--accent);margin-top:14px}
+
+/* Section */
+.sec{margin-bottom:48px}
+.sec h2{font-size:1.5rem;font-weight:700;letter-spacing:-.5px;color:var(--accent);margin-bottom:6px}
+.sec h2 span{color:var(--text-muted);font-weight:400;font-size:.85rem;margin-left:8px}
+.sec h3{font-size:1.1rem;font-weight:600;color:var(--text);margin:24px 0 8px}
+.sec p{color:var(--text-dim);margin-bottom:12px}
+.sec strong{color:var(--text);font-weight:600}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.card.accent{border-left:3px solid var(--accent)}
+.card.warn{border-left:3px solid var(--warn)}
+.card.danger{border-left:3px solid var(--danger)}
+.card.green{border-left:3px solid var(--green)}
+.card h4{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:.88rem;color:var(--text-dim);margin-bottom:6px}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto;margin:16px 0;border-radius:10px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th{background:var(--surface2);color:var(--accent);font-weight:600;padding:10px 8px;text-align:center;position:sticky;top:0;font-family:var(--mono)}
+td{padding:8px;text-align:center;border-top:1px solid var(--border);font-family:var(--mono);color:var(--text-dim)}
+tr:hover td{background:var(--surface2)}
+td.label{text-align:left;font-weight:600;color:var(--text);font-family:var(--font)}
+td.hi{color:var(--green);font-weight:600}
+td.mid{color:var(--warn);font-weight:600}
+td.lo{color:var(--danger);font-weight:600}
+
+/* Grid */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:640px){.g2,.g3{grid-template-columns:1fr}}
+
+/* Stat boxes */
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+.stat .val{font-size:1.6rem;font-weight:700;font-family:var(--mono);color:var(--accent)}
+.stat .lbl{font-size:.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
+.stat .det{font-size:.78rem;color:var(--text-dim);margin-top:4px}
+
+/* Trim scale */
+.trim-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.trim-row:last-child{border:none}
+.trim-label{width:110px;font-size:.82rem;font-weight:600;color:var(--text);flex-shrink:0}
+.trim-bar{flex:1;height:8px;background:var(--surface3);border-radius:4px;position:relative;overflow:hidden}
+.trim-fill{height:100%;border-radius:4px;transition:width .3s}
+.trim-vals{display:flex;gap:6px;font-size:.7rem;font-family:var(--mono);color:var(--text-muted)}
+
+/* Wind zones */
+.zone{display:flex;align-items:stretch;gap:2px;height:28px;border-radius:6px;overflow:hidden;margin:8px 0}
+.zone div{flex:1;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:600;color:#fff;letter-spacing:.3px}
+
+/* TOC */
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:40px}
+.toc h3{font-size:.9rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.toc a{display:block;padding:5px 0;color:var(--accent);text-decoration:none;font-size:.88rem;border-bottom:1px solid var(--border)}
+.toc a:last-child{border:none}
+.toc a:hover{color:#fff}
+.toc .num{color:var(--text-muted);font-family:var(--mono);margin-right:8px;font-size:.78rem}
+
+/* Footnote */
+.fn{font-size:.75rem;color:var(--text-muted);border-top:1px solid var(--border);padding-top:16px;margin-top:40px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Seascape 18 — Regatta Speed Guide</h1>
+  <div class="sub">Tiefenanalyse: Polardaten, Trimm, Taktik & Performance für die Kornaten-Regatta</div>
+  <div class="tag">⛵ Basierend auf VPP-Daten, App-Polaren & Patato Speed Guide</div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>Inhalt</h3>
+  <a href="#profil"><span class="num">01</span>Bootsprofil & Charakteristik</a>
+  <a href="#polar"><span class="num">02</span>Polaranalyse — Wo die Speed liegt</a>
+  <a href="#vmg"><span class="num">03</span>VMG-Targets & optimale Winkel</a>
+  <a href="#upwind"><span class="num">04</span>Upwind-Strategie</a>
+  <a href="#downwind"><span class="num">05</span>Downwind & Gennaker</a>
+  <a href="#trimm"><span class="num">06</span>Trimm-Referenz nach TWS</a>
+  <a href="#wellen"><span class="num">07</span>Wellenkorrektur & Kornaten-Seegang</a>
+  <a href="#bora"><span class="num">08</span>Bora-Management</a>
+  <a href="#leichtwind"><span class="num">09</span>Leichtwind-Taktik</a>
+  <a href="#cheat"><span class="num">10</span>Race-Day Cheat Sheet</a>
+</div>
+
+<!-- 01 BOOTSPROFIL -->
+<div class="sec" id="profil">
+  <h2>01 — Bootsprofil & Charakteristik</h2>
+  <p>Die Seascape 18 (auch <strong>Beneteau First 18 SE</strong>) ist eine 5.5m Sportjolle, die zwischen klassischer Jolle und kleinem Kielboot positioniert ist. Ihr Regatta-Vorteil liegt eindeutig im Vorwind.</p>
+
+  <div class="g3">
+    <div class="stat"><div class="val">~500kg</div><div class="lbl">Leergewicht</div><div class="det">reagiert extrem auf Crew-Pos.</div></div>
+    <div class="stat"><div class="val">2 Pers.</div><div class="lbl">Crew</div><div class="det">Hiking-Gurte, kein Trapez</div></div>
+    <div class="stat"><div class="val">14kg</div><div class="lbl">Carbon-Mast</div><div class="det">leicht, elektr. Leiter</div></div>
+  </div>
+
+  <div class="card accent" style="margin-top:16px">
+    <h4>🔑 Schlüssel-Eigenschaften</h4>
+    <p><strong>Kein Backstag</strong> — Mast nur durch Vorstag + 2 gerade Wanten (ohne Spreader) gehalten. Bei Bora-Böen: Wantspannung und Püttingbelastung kritisch beobachten.</p>
+    <p><strong>Kein Traveller</strong> — Depower-Instrumente upwind: Großschot, Cunningham, Baumniederholer/Kicker, Unterliekstrecker. Das limitiert die Trimmoptionen gegenüber größeren Booten.</p>
+    <p><strong>Twin-Ruder</strong> — Voller Grip auch beim Planen. Kein Kontrollverlust bei Krängung — großer Vorteil downwind.</p>
+    <p><strong>Snuffer-System</strong> — Gennaker-Bergen über Continuous Halyard. Kein Sofort-System → Entscheidung muss proaktiv fallen (3-5 Sekunden Bergen-Zeit).</p>
+  </div>
+</div>
+
+<!-- 02 POLARANALYSE -->
+<div class="sec" id="polar">
+  <h2>02 — Polaranalyse <span>Wo die Speed liegt</span></h2>
+  <p>Drei Datenquellen: <strong>VPP Random Leg Targets</strong>, <strong>App-Polare (benutzerdefiniert)</strong> und die <strong>SailNavSim-Polaren</strong> aus dem Briefing-System. Die Werte sind hochkonsistent — Abweichungen unter 5%.</p>
+
+  <h3>VPP-Polartabelle (Boat Speed in kt)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>TWA \ TWS</th><th>6kt</th><th>8kt</th><th>10kt</th><th>12kt</th><th>14kt</th><th>16kt</th><th>20kt</th></tr>
+      <tr><td class="label">35°</td><td>3.61</td><td>4.40</td><td>4.84</td><td>4.96</td><td>5.04</td><td>5.08</td><td>5.05</td></tr>
+      <tr><td class="label">40°</td><td>4.04</td><td>4.83</td><td>5.26</td><td>5.37</td><td>5.44</td><td>5.50</td><td>5.49</td></tr>
+      <tr><td class="label">45°</td><td>4.35</td><td>5.12</td><td>5.51</td><td>5.63</td><td>5.72</td><td>5.78</td><td>5.82</td></tr>
+      <tr><td class="label">60°</td><td>4.84</td><td>5.51</td><td>5.93</td><td class="hi">6.18</td><td class="hi">6.32</td><td class="hi">6.43</td><td class="hi">6.55</td></tr>
+      <tr><td class="label">90°</td><td>5.09</td><td>5.81</td><td>6.19</td><td class="hi">6.76</td><td class="hi">7.32</td><td class="hi">7.72</td><td class="hi">8.21</td></tr>
+      <tr><td class="label">110°</td><td>5.16</td><td>6.00</td><td>6.74</td><td class="hi">7.28</td><td class="hi">7.72</td><td class="hi">8.15</td><td class="hi">9.24</td></tr>
+      <tr><td class="label">120°</td><td>4.98</td><td>5.89</td><td>6.72</td><td class="hi">7.58</td><td class="hi">8.26</td><td class="hi">8.85</td><td class="hi">10.15</td></tr>
+      <tr><td class="label">135°</td><td>4.51</td><td>5.47</td><td>6.27</td><td>7.14</td><td class="hi">8.13</td><td class="hi">9.29</td><td class="hi">11.99</td></tr>
+      <tr><td class="label">150°</td><td>3.84</td><td>4.83</td><td>5.54</td><td>6.22</td><td>7.00</td><td>7.85</td><td class="hi">11.04</td></tr>
+      <tr><td class="label">180°</td><td>3.09</td><td>3.92</td><td>4.50</td><td>5.04</td><td>5.64</td><td>6.32</td><td>8.85</td></tr>
+    </table>
+  </div>
+
+  <div class="card accent">
+    <h4>📊 Kernerkenntnisse aus den Polaren</h4>
+    <p><strong>Upwind-Plateau:</strong> Ab 12kt TWS steigert sich BSP upwind kaum noch (5.37 → 5.49kt bei TWA 40°). Das Boot ist upwind „gedeckelt" — der Rumpf limitiert. Jenseits von 14kt geht es nur noch um Kontrolle, nicht um Speed.</p>
+    <p><strong>Downwind-Explosion:</strong> Ab TWA 120° und 14kt+ TWS explodiert die Performance. Bei 20kt TWS / 135° TWA: <strong>11.99kt BSP</strong> — das ist 2.3× die Upwind-Speed. Hier wird die Regatta gewonnen.</p>
+    <p><strong>Sweet Spot Reaching:</strong> TWA 90-120° bei 12-16kt: konstant 7-9kt BSP. Das ist die Komfortzone für schnelles, kontrollierbares Segeln.</p>
+  </div>
+</div>
+
+<!-- 03 VMG TARGETS -->
+<div class="sec" id="vmg">
+  <h2>03 — VMG-Targets & optimale Winkel</h2>
+  <p>Die App-Polare liefern präzise VMG-Winkel pro TWS. Diese Targets sind das Fundament jeder Regatta-Taktik.</p>
+
+  <h3>Upwind VMG-Targets</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>TWS</th><th>6kt</th><th>8kt</th><th>10kt</th><th>12kt</th><th>14kt</th><th>16kt</th><th>20kt</th></tr>
+      <tr><td class="label">Optimaler TWA</td><td>42.1°</td><td>40.2°</td><td>38.7°</td><td>37.8°</td><td>37.6°</td><td>37.5°</td><td>37.6°</td></tr>
+      <tr><td class="label">VMG (kt)</td><td>2.91</td><td>3.51</td><td class="hi">3.92</td><td class="hi">4.14</td><td class="hi">4.20</td><td class="hi">4.27</td><td class="hi">4.31</td></tr>
+      <tr><td class="label">BSP (kt)</td><td>3.92</td><td>4.57</td><td>5.00</td><td>5.24</td><td>5.31</td><td>5.37</td><td>5.41</td></tr>
+    </table>
+  </div>
+
+  <div class="card green">
+    <h4>🎯 Upwind-Regel</h4>
+    <p>Bei <strong>Leichtwind (6-8kt)</strong>: weiter abfallen auf ~40-42° — Speed > Höhe. Der VMG-Verlust durch zu spitz ist dramatisch.</p>
+    <p>Bei <strong>Mittelwind (10-14kt)</strong>: auf 37-39° ankneifen — das Boot hat genug Power. Hier gewinnt Höhe.</p>
+    <p>Bei <strong>Starkwind (16+kt)</strong>: TWA bleibt bei 37-38° stabil. Mehr Wind = Depower, nicht höher segeln.</p>
+  </div>
+
+  <h3>Downwind VMG-Targets</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>TWS</th><th>6kt</th><th>8kt</th><th>10kt</th><th>12kt</th><th>14kt</th><th>16kt</th><th>20kt</th></tr>
+      <tr><td class="label">Optimaler TWA</td><td>146.2°</td><td>147.8°</td><td>148.5°</td><td>146.9°</td><td>144.3°</td><td>143.4°</td><td class="hi">136.6°</td></tr>
+      <tr><td class="label">VMG (kt)</td><td>3.19</td><td>4.02</td><td>4.65</td><td>5.14</td><td class="hi">5.69</td><td class="hi">6.37</td><td class="hi">8.67</td></tr>
+      <tr><td class="label">BSP (kt)</td><td>3.82</td><td>4.80</td><td>5.50</td><td>6.15</td><td>6.88</td><td>7.69</td><td class="hi">11.98</td></tr>
+    </table>
+  </div>
+
+  <div class="card accent">
+    <h4>📐 Downwind-Regel — Der „Planing-Shift"</h4>
+    <p>Unter 14kt TWS: relativ tief segeln (~147°), klassisches Vorwindsegeln mit Gennaker.</p>
+    <p>Ab 14kt TWS ändert sich das Bild fundamental: Der optimale TWA wird <strong>flacher</strong> (von 148° → 137° bei 20kt). Das Boot beginnt zu planen, und höhere BSP kompensiert den schlechteren Winkel zum Ziel. Die VMG steigt von 5.14kt auf <strong>8.67kt</strong> — ein Faktor 1.7×.</p>
+    <p>Das ist der entscheidende Moment: <strong>Wenn das Boot plant, flacher segeln, nicht tiefer.</strong> Gegen die Intuition, aber mathematisch eindeutig.</p>
+  </div>
+
+  <h3>VMG-Asymmetrie: Warum Downwind die Regatta entscheidet</h3>
+  <div class="g2">
+    <div class="stat"><div class="val" style="color:var(--text-dim)">4.31kt</div><div class="lbl">Max VMG Upwind</div><div class="det">bei 20kt TWS</div></div>
+    <div class="stat"><div class="val" style="color:var(--green)">8.67kt</div><div class="lbl">Max VMG Downwind</div><div class="det">bei 20kt TWS — 2× schneller</div></div>
+  </div>
+  <p style="margin-top:12px">Die Downwind-VMG ist bei Starkwind doppelt so hoch wie die Upwind-VMG. In einer Regatta mit gemischten Kursen bedeutet das: <strong>Am Vorwind wird die Regatta verloren, am Raumwind gewonnen.</strong> Upwind muss man fehlerfrei segeln (Verluste minimieren), downwind aggressiv (Gewinne maximieren).</p>
+</div>
+
+<!-- 04 UPWIND -->
+<div class="sec" id="upwind">
+  <h2>04 — Upwind-Strategie</h2>
+
+  <div class="card accent">
+    <h4>⛵ Grundprinzip: „Nicht verlieren"</h4>
+    <p>Die Seascape 18 ist upwind durch den Rumpf limitiert. Ab 12kt TWS ist BSP ~ 5.3kt, egal wieviel mehr Wind. Hier gewinnt nicht der Schnellste, sondern der Konstanteste. Jede Wende kostet 3-4 Bootslängen — weniger Wenden = mehr VMG.</p>
+  </div>
+
+  <h3>TWS-abhängige Upwind-Strategie</h3>
+
+  <div class="card green">
+    <h4>🟢 Leichtwind (6-10kt TWS)</h4>
+    <p><strong>TWA: 38-42°</strong> — Weiter abfallen als gefühlt richtig. Speed bauen ist alles.</p>
+    <p><strong>Trimm:</strong> Wanten 3.1-3.3, Kicker leicht, Cunningham lose. Großschot nicht dichtnehmen — Twist offen halten für laminaren Flow.</p>
+    <p><strong>Crew:</strong> Weit vorn und nach Lee. Breite Achterschiffssektionen aus dem Wasser heben. Minimalste Ruderbewegungen.</p>
+    <p><strong>Taktik:</strong> Laylines nicht übersegeln. Lange Schläge auf der bevorzugten Seite. Jede Wende ist teuer — Verhältnis Wendewinkel/VMG-Verlust ist bei Leichtwind am schlechtesten.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--accent)">
+    <h4>🔵 Mittelwind (10-16kt TWS)</h4>
+    <p><strong>TWA: 37-39°</strong> — Sweet Spot. Boot hat Power, kann Höhe laufen.</p>
+    <p><strong>Trimm:</strong> Wanten 3.5-3.7, Kicker medium bis voll (ab 12kt+), Cunningham ab 8kt einsetzend. Fock-Holepunkt achterlich ab 12kt — Twist öffnen zum Depower.</p>
+    <p><strong>Crew:</strong> Aktiv hiken. Die 500kg Bootsmasse reagiert direkt auf Gewichtsverlagerung — bei Böe sofort aushiken, bei Loch zurück.</p>
+    <p><strong>Taktik:</strong> Hier wird Boatspeed durch Trimm gemacht. Wer den Cunningham und Kicker richtig dosiert, fährt 0.2-0.3kt schneller als die Konkurrenz. Fock-Holepunkt ist der „geheime" Hebel.</p>
+  </div>
+
+  <div class="card warn">
+    <h4>🟡 Starkwind (16-21kt TWS)</h4>
+    <p><strong>TWA: 37-38°</strong> — Nicht höher als 37°, sonst stirbt die Speed.</p>
+    <p><strong>Trimm:</strong> Wanten 3.9-4.1, Cunningham voll (ab 18kt+), Kicker voll, Unterliekstrecker. Alles auf Depower. Fock-Holepunkt maximal achterlich.</p>
+    <p><strong>Reff-Schwelle:</strong> Ab 18-20kt TWS. Davor Depower über Cunningham + Kicker + Schot. Das Reff ist der letzte Schritt, nicht der erste.</p>
+    <p><strong>Taktik:</strong> Boot flach halten. Die Seascape 18 kentert über die Luvseite (Fock-Seite) — proaktiv auffieren wenn die Böe kommt. Lieber 2° abfallen als kentbar werden.</p>
+  </div>
+
+  <div class="card danger">
+    <h4>🔴 Sturm (21+kt TWS)</h4>
+    <p><strong>Großsegel-Reff</strong> ab 21kt (ohne Fock). Wanten 4.2-4.3 (Sturm-Setting).</p>
+    <p><strong>Kielposition:</strong> 85° (Standard 88°) — mehr Stabilität.</p>
+    <p><strong>Taktik:</strong> Nur noch sichere Wenden, keine Risiken. Jede Wende muss sitzen — bei 25kt+ ist eine verunglückte Wende = Kenterung.</p>
+  </div>
+</div>
+
+<!-- 05 DOWNWIND -->
+<div class="sec" id="downwind">
+  <h2>05 — Downwind & Gennaker</h2>
+  <p>Hier wird die Regatta gewonnen. Die Seascape 18 kann planen und entwickelt downwind dramatisch mehr Speed als upwind.</p>
+
+  <h3>Planing-Schwelle</h3>
+  <div class="g3">
+    <div class="stat"><div class="val">10-12kt</div><div class="lbl">Planing-Onset TWS</div></div>
+    <div class="stat"><div class="val">11-12kt</div><div class="lbl">GPS-Speed normal</div></div>
+    <div class="stat"><div class="val">15kt</div><div class="lbl">Spitzen-BSP</div></div>
+  </div>
+
+  <h3>Gennaker-Management</h3>
+  <div class="zone">
+    <div style="background:var(--green);flex:3">0-12kt: SET</div>
+    <div style="background:var(--accent);flex:2">12-17kt: PLANING</div>
+    <div style="background:var(--warn);flex:1.5">17-22kt: RISIKO</div>
+    <div style="background:var(--danger);flex:1">22+: KEIN GEN.</div>
+  </div>
+
+  <div class="g2" style="margin-top:16px">
+    <div class="card green">
+      <h4>🟢 Leichtwind-Gennaker (0-10kt)</h4>
+      <p>TWA ~147-148°. Tief segeln, Schot nicht zu dicht. Crew nach Lee und vorn. Gennaker-Luff gerade halten — erstes Einfallen = optimal.</p>
+    </div>
+    <div class="card accent">
+      <h4>🔵 Planing-Gennaker (10-16kt)</h4>
+      <p>TWA beginnt flacher zu werden (144-147°). Beim Planing-Onset: <strong>sofort abfallen, Speed mitnehmen</strong>, dann wieder aufkommen. „S-Kurven" durch Böen surfen. Twin-Ruder geben vollen Grip.</p>
+    </div>
+  </div>
+
+  <div class="card warn">
+    <h4>⚠️ Grenzbereich Gennaker (17-22kt TWS)</h4>
+    <p>Ab Bft 5 (17-18kt) steigt das Krängungs- und Kenterrisiko exponentiell. Der Gennaker ist dann ein „Alles-oder-Nichts"-Segel.</p>
+    <p><strong>Böen-Reaktion — Eskalationsstufen:</strong></p>
+    <p>1. <strong>Leichte Böe:</strong> Abfallen + Gennaker-Schot auffieren → Boot läuft durch die Böe</p>
+    <p>2. <strong>Starke Böe:</strong> Gennaker-Schot ganz auffieren + Fock ausrollen → Stabilisieren</p>
+    <p>3. <strong>Extreme Böe:</strong> Gennaker-Schot sofort los + Fock raus + Gennaker in den Snuffer bergen</p>
+    <p style="color:var(--danger);font-weight:600;margin-top:8px">Kritisch: Bergen dauert 3-5 Sekunden. Die Entscheidung zum Bergen muss BEVOR die Böe da ist fallen, nicht wenn sie bereits trifft.</p>
+  </div>
+
+  <div class="card danger">
+    <h4>🔴 Ab 22kt TWS: Kein Gennaker</h4>
+    <p>Nur Fock + Groß (ggf. gerefft). VMG-Verlust ist tragbar — der Risiko/Reward kippt. Eine Kenterung kostet 5-10 Minuten, das Bergen bei 22kt+ ist nahezu unkontrollierbar.</p>
+  </div>
+</div>
+
+<!-- 06 TRIMM -->
+<div class="sec" id="trimm">
+  <h2>06 — Trimm-Referenz nach TWS</h2>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Parameter</th><th>0-8kt</th><th>8-12kt</th><th>12-16kt</th><th>16-21kt</th><th>21+kt</th></tr>
+      <tr><td class="label">Wantenspannung</td><td>3.1 – 3.3</td><td>3.3 – 3.5</td><td class="hi">3.5 – 3.7</td><td class="mid">3.9 – 4.1</td><td class="lo">4.2 – 4.3</td></tr>
+      <tr><td class="label">Cunningham</td><td>lose</td><td>einsetzend</td><td>medium</td><td class="mid">voll (ab 18kt)</td><td class="lo">max</td></tr>
+      <tr><td class="label">Baumniederholer</td><td>leicht</td><td>leicht → medium</td><td class="hi">voll</td><td class="mid">voll</td><td class="lo">voll</td></tr>
+      <tr><td class="label">Fock-Holepunkt</td><td>mittig</td><td>mittig</td><td>achterlich</td><td class="mid">max achterlich</td><td class="lo">max achterlich</td></tr>
+      <tr><td class="label">Großsegel</td><td>voll</td><td>voll</td><td>Depower</td><td class="mid">Depower max</td><td class="lo">Reff</td></tr>
+      <tr><td class="label">Kielposition</td><td>88°</td><td>88°</td><td>88° – 86°</td><td>86° – 85°</td><td class="lo">85°</td></tr>
+      <tr><td class="label">Crew-Position</td><td>vorn + Lee</td><td>mittig</td><td>hiken</td><td class="mid">voll hiken</td><td class="lo">voll hiken</td></tr>
+    </table>
+  </div>
+
+  <div class="card accent">
+    <h4>💡 Trimm-Prinzip ohne Traveller</h4>
+    <p>Die Seascape 18 hat keinen Traveller — deshalb wird die <strong>Depower-Kaskade</strong> umso wichtiger:</p>
+    <p><strong>Stufe 1 (8-12kt):</strong> Cunningham leicht anziehen → flacht das Großsegel-Profil ab</p>
+    <p><strong>Stufe 2 (12-16kt):</strong> Kicker voll → kontrolliert den Twist, Fock-Holepunkt nach achtern → öffnet oberes Fock-Profil</p>
+    <p><strong>Stufe 3 (16-20kt):</strong> Cunningham voll → maximale Profilabflachung. Unterliekstrecker → öffnet Großsegel-Unterliek</p>
+    <p><strong>Stufe 4 (20+kt):</strong> Reff. Kein weiteres Depower möglich. Großsegel-Fläche reduzieren.</p>
+  </div>
+</div>
+
+<!-- 07 WELLEN -->
+<div class="sec" id="wellen">
+  <h2>07 — Wellenkorrektur & Kornaten-Seegang</h2>
+  <p>Die SailNavSim-Wellentabelle quantifiziert den Speed-Verlust durch Seegang. Für die Kornaten ist das besonders relevant — kurzer, steiler Seegang in den Kanälen.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Wellenhöhe</th><th>Speed-Verlust</th><th>Kornaten-Relevanz</th><th>BSP-Impact @10kt TWS</th></tr>
+      <tr><td class="label">0.25m</td><td>0.1%</td><td>Normal, Flachwasser</td><td>−0.01kt</td></tr>
+      <tr><td class="label">0.50m</td><td>0.4%</td><td>Leichter Seegang</td><td>−0.02kt</td></tr>
+      <tr><td class="label">1.0m</td><td class="mid">1.7%</td><td>Typisch Kornaten</td><td>−0.11kt</td></tr>
+      <tr><td class="label">2.0m</td><td class="lo">6.4%</td><td>Bora-Seegang</td><td>−0.40kt</td></tr>
+      <tr><td class="label">3.0m</td><td class="lo">13.9%</td><td>Regatta-kritisch</td><td>−0.86kt</td></tr>
+      <tr><td class="label">4.0m</td><td class="lo">23.4%</td><td>Kein Rennen</td><td>−1.45kt</td></tr>
+    </table>
+  </div>
+
+  <div class="card warn">
+    <h4>🌊 Kornaten-Spezifik</h4>
+    <p>Die Kornaten-Kanäle erzeugen <strong>kurze, steile Wellen</strong> (Fetch-limitiert), die überproportional bremsen. 1.5m in den Kornaten fühlt sich an wie 2m im offenen Wasser. Besonders in den Durchfahrten (Proversa Vela, Žut-Kanal) baut sich bei NE-Wind (Bora) ein unangenehmer, kurzer Chop auf.</p>
+    <p>Bei <strong>Jugo (SE)</strong>: Dünung aus SE trifft in die Kornaten-Durchfahrten — längere Wellenperiode, aber reflexion an den Felswänden erzeugt chaotischen Seegang.</p>
+  </div>
+</div>
+
+<!-- 08 BORA -->
+<div class="sec" id="bora">
+  <h2>08 — Bora-Management</h2>
+  <p>Die Bora ist der dominante Wetterfaktor in den Kornaten. Böen können in Sekunden von 10kt auf 40kt+ springen — für eine 500kg Jolle potenziell kritisch.</p>
+
+  <div class="card danger">
+    <h4>🌬️ Bora-Charakteristik an der Kornaten-Küste</h4>
+    <p><strong>Richtung:</strong> NE (340°-070°), fällt von den Bergen herab</p>
+    <p><strong>Böen-Faktor:</strong> 2-3× des Mittelwinds — bei 15kt Mittel: Böen 30-45kt möglich</p>
+    <p><strong>Düseneffekt:</strong> In Kanälen (Žut, Kornat-Kanal) verstärkt sich die Bora um 30-50%</p>
+    <p><strong>Kap-Effekte:</strong> Kap Purara, offene Überfahrten — plötzliche Windsprünge um 20-30°</p>
+    <p><strong>Warnsignale:</strong> Druckgradient steigt, Cumulus über dem Velebit-Gebirge, Windrichtung dreht auf NE</p>
+  </div>
+
+  <div class="card accent">
+    <h4>🛡️ Seascape 18 Bora-Protokoll</h4>
+    <p><strong>Pre-Böe (Warnsignale erkannt):</strong></p>
+    <p>→ Cunningham und Kicker voll dichtnehmen. Wanten auf 3.9+. Gennaker proaktiv bergen (BEVOR die Böe da ist!).</p>
+    <p><strong>In der Böe:</strong></p>
+    <p>→ Upwind: Groß-Schot auffieren, abfallen, Speed aufbauen, dann wieder anluven. Nie gegen die Böe ankämpfen.</p>
+    <p>→ Downwind: S-Kurven fahren — in der Böe abfallen (Speed), im Loch wieder aufkommen (VMG).</p>
+    <p><strong>Kritische Schwelle:</strong></p>
+    <p>→ Bei Bora >25kt Mittelwind: Nicht mehr in die Kanäle einfahren. Offene Überfahrten meiden. Jezera/Murter-Umgebung halten.</p>
+    <p style="margin-top:8px"><strong>Wantspannung prüfen:</strong> Kein Backstag = der Mast wird nur durch Vorstag + Wanten gehalten. Bei Bora-Böen auf Püttingbelastung achten — Bruchrisiko bei >35kt Böen wenn Wanten nicht korrekt gespannt.</p>
+  </div>
+</div>
+
+<!-- 09 LEICHTWIND -->
+<div class="sec" id="leichtwind">
+  <h2>09 — Leichtwind-Taktik <span>&lt;6kt TWS</span></h2>
+
+  <div class="card green">
+    <h4>🍃 „Das Boot schweben lassen"</h4>
+    <p><strong>Crew-Position:</strong> Beide weit nach vorn und nach Lee. Ziel: Die breiten Achterschiffs-Sektionen aus dem Wasser heben. Jedes Kilogramm, das den Rumpf aus dem Wasser hebt, reduziert die benetzte Fläche.</p>
+    <p><strong>Ruder:</strong> Minimale Ruderbewegungen. Jede Ruderbewegung ist eine Bremse. Steuern über Gewichtsverlagerung und Segeltrimm.</p>
+    <p><strong>Segel:</strong> Großschot sehr lose — Twist maximal offen. Cunningham und Kicker lose. Das Segel muss „atmen" können.</p>
+    <p><strong>Gennaker:</strong> Bei <5kt TWS den Gennaker konstant achterlich pumpen ist illegal (Regel 42), aber die Gewichtsverlagerung bei jeder Welle nutzen: Crew-Wiegen (Roll-Tack legal bei Manövern).</p>
+    <p><strong>Kornaten-Vorteil:</strong> In den Kanälen zwischen den Inseln bilden sich thermische Winde am Nachmittag. Wer die lokalen Thermik-Fenster kennt, kann 1-2kt mehr Wind finden als im offenen Wasser.</p>
+  </div>
+</div>
+
+<!-- 10 CHEAT SHEET -->
+<div class="sec" id="cheat">
+  <h2>10 — Race-Day Cheat Sheet</h2>
+
+  <h3>Schnellreferenz: TWA-Targets</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>TWS</th><th>Upwind TWA</th><th>Upwind VMG</th><th>Downwind TWA</th><th>Downwind VMG</th><th>Gennaker?</th></tr>
+      <tr><td class="label">6kt</td><td>42°</td><td>2.9kt</td><td>146°</td><td>3.2kt</td><td class="hi">JA</td></tr>
+      <tr><td class="label">8kt</td><td>40°</td><td>3.5kt</td><td>148°</td><td>4.0kt</td><td class="hi">JA</td></tr>
+      <tr><td class="label">10kt</td><td>39°</td><td>3.9kt</td><td>149°</td><td>4.7kt</td><td class="hi">JA + Planing</td></tr>
+      <tr><td class="label">12kt</td><td>38°</td><td>4.1kt</td><td>147°</td><td>5.1kt</td><td class="hi">JA + Planing</td></tr>
+      <tr><td class="label">14kt</td><td>38°</td><td>4.2kt</td><td>144°</td><td>5.7kt</td><td class="hi">JA + voll Planing</td></tr>
+      <tr><td class="label">16kt</td><td>38°</td><td>4.3kt</td><td>143°</td><td>6.4kt</td><td class="mid">JA, vorsichtig</td></tr>
+      <tr><td class="label">18kt</td><td>38°</td><td>4.3kt</td><td>~140°</td><td>~7.2kt</td><td class="lo">Grenzbereich</td></tr>
+      <tr><td class="label">20kt</td><td>38°</td><td>4.3kt</td><td>137°</td><td>8.7kt</td><td class="lo">Nur Profis</td></tr>
+      <tr><td class="label">22+kt</td><td>38°</td><td>4.3kt</td><td>—</td><td>—</td><td style="color:var(--danger);font-weight:600">NEIN</td></tr>
+    </table>
+  </div>
+
+  <h3>Vor dem Start — 5 Checks</h3>
+  <div class="g2">
+    <div class="card green">
+      <h4>✅ Trimm-Check</h4>
+      <p>1. Wantenspannung auf TWS einstellen<br>
+      2. Cunningham/Kicker voreinstellen<br>
+      3. Fock-Holepunkt positionieren<br>
+      4. Kielposition kontrollieren<br>
+      5. Snuffer-System testen</p>
+    </div>
+    <div class="card accent">
+      <h4>✅ Taktik-Check</h4>
+      <p>1. Wind-Trend (Drehung? Böen?)<br>
+      2. Strom-Richtung/-Stärke<br>
+      3. Bevorzugte Seite für 1. Schlag<br>
+      4. Gennaker: Set oder nicht?<br>
+      5. Bora-Warnsignale?</p>
+    </div>
+  </div>
+
+  <h3>Die 5 goldenen Regeln</h3>
+  <div class="card" style="border-left:3px solid var(--warn);background:linear-gradient(135deg,var(--surface),var(--surface2))">
+    <p style="font-size:1rem;color:var(--text);line-height:2">
+      <strong style="color:var(--warn)">1.</strong> Upwind: Fehlerfrei segeln — wenig Wenden, VMG-Targets halten.<br>
+      <strong style="color:var(--warn)">2.</strong> Downwind: Aggressiv segeln — Gennaker so lang wie verantwortbar.<br>
+      <strong style="color:var(--warn)">3.</strong> Planing-Shift: Wenn das Boot plant, <strong>flacher</strong> segeln (TWA sinkt!).<br>
+      <strong style="color:var(--warn)">4.</strong> Gennaker-Bergen: PROAKTIV, nicht reaktiv. 5 Sekunden zu früh > 1 Sekunde zu spät.<br>
+      <strong style="color:var(--warn)">5.</strong> Bora: Wanten prüfen, Kanäle meiden bei >25kt, Carbon-Mast = Blitzableiter.
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="fn">
+  <p>Datenquellen: VPP Random Leg Targets, App-Polare (benutzerdefiniert), SailNavSim Polardaten, F18 Patato Speed Guide, SailNavSim Wellenkorrektur-Tabelle. Kornaten Regatta Briefing v4.9 Workflow-Daten.</p>
+  <p style="margin-top:6px">Erstellt April 2026 — Alexander Kruse · Kornaten Regatta Briefing Projekt</p>
+</div>
+
+</div>
+</body>
+</html>
